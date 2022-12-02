@@ -1,4 +1,4 @@
-import { makeNoise3D } from "fast-simplex-noise";
+import { makeNoise2D, makeNoise3D } from "fast-simplex-noise";
 import { hsl, gray } from "../color.js";
 
 let n = makeNoise3D();
@@ -15,10 +15,8 @@ let n = makeNoise3D();
  * @returns The RGB color to display at the x,y location at time t
  */
 function shade(x, y, t) {
-    
-    //❓❓ Question 3
-    //❓❓ Question 4
-    return [x, y, Math.sin(t)];
+
+    return [0, 2, 1];
 }
 
 /**
@@ -27,12 +25,32 @@ function shade(x, y, t) {
  * @param t -The time in seconds
  */
 function draw(ctx, t) {
-    //See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = 'black';
-    //❓❓ Question 5
-    //❓❓ Question 6
-    ctx.strokeRect(75, 100, 150 + 10 * Math.sin(t), 100 + 10 * Math.cos(t)); 
+    ctx.beginPath();
+    ctx.arc(40, 20 + Math.sin(t + 180) + 170, 25, 0, 2 * Math.PI);
+    ctx.strokeStyle = 'Black';
+    ctx.stroke();
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    ctx.lineWidth = 10;
+
+
+
+    // Wall
+    ctx.fillStyle = "Yellow";
+    ctx.fillRect(75, 140, 150, 110);
+
+    // Door
+    ctx.fillStyle = "Black";
+    ctx.fillRect(130, 190, 40, 60);
+    // Roof
+    ctx.beginPath();
+    ctx.moveTo(50, 140);
+    ctx.lineTo(150, 60);
+    ctx.lineTo(250, 140);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
 }
 
 export default { name: "My Homework", shade, draw }
